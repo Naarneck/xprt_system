@@ -1,8 +1,12 @@
 #include "fact.hpp"
 
-Fact::Fact(void) : _value(-1) {}
+Fact::Fact(void) : _value(-1) {
+}
 
-Fact::Fact(int val) : _value(val) {}
+Fact::Fact(int val, std::string nm) : 
+						_value(val),
+						_name(nm) {
+}
 
 Fact::~Fact(void) {}
 
@@ -41,4 +45,8 @@ Fact &	Fact::operator!(){
 
 int		Fact::getValue(){
 	return this->_value;
+}
+
+std::string		Fact::getName(){
+	return this->_name;
 }

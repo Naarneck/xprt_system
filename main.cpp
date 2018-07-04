@@ -3,6 +3,31 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <algorithm>
+
+bool	isupper_s(std::string s)
+{
+	int i = 0;
+
+	while (s[i] != '\0')
+	{
+		if (!(isupper(s[i]) && isalpha(s[i])))
+			return false;
+		i++;
+	}
+	return true;
+}
+
+bool	isduplicated(std::vector<Fact> vec, std::string name)
+{
+	for (int i = 0; i < vec.size(); i++)
+	{
+		if (vec[i].getName() == name)
+			return true;
+	}
+	return false;
+}
+
 
 int main(int argc, char const *argv[])
 {
@@ -22,21 +47,24 @@ int main(int argc, char const *argv[])
 	while (std::getline(infile, line))
 	{
 		std::istringstream iss(line);
-		std::string subs;
+		std::string sym;
 		while (iss)
 		{
-			iss >> subs;
-			if (subs[0] == '#')
+			iss >> sym;
+			if (sym[0] == '#')
 				break ;
-			std::cout << "Substring: " << subs << std::endl;
-			if (isupper(subs) ) //and not exist
+			if (isupper_s(sym) && !isduplicated(facts, sym)) //isdup not working
+			{
+				std::cout << "symtring: " << sym << std::endl;
+				facts.push_back(Fact(-1, sym));
+			}
 		}
 	}
 
 	if(infile.is_open())
 		infile.close();
 
-	Fact A(1), B(1), C(0);
+	Fact A(1, "A"), B(1, "B"), C(0, "C");
 	std::cout<< A.getValue() << B.getValue() << C.getValue() << std::endl;
 	A = C + B;
 	std::cout<< A.getValue() << B.getValue() << C.getValue() << std::endl; 
